@@ -1,8 +1,8 @@
 'use strict'
 
-const { db } = require('../config/firebaseConfig')
-const getNewsApiArticles = require('../helpers/getNewsApiArticles')
-const getCurrentsApiArticles = require('../helpers/getCurrentsApiArticles')
+const { db } = require('../src/config/firebaseConfig')
+const getNewsApiArticles = require('../src/helpers/getNewsApiArticles')
+const getCurrentsApiArticles = require('../src/helpers/getCurrentsApiArticles')
 
 const deleteCollection = async (collectionName) => {
   const collectionRef = db.collection(collectionName)
