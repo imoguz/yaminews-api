@@ -1,9 +1,8 @@
 'use strict'
 
 const { db } = require('../config/firebaseConfig')
-const getNewsApiArticles = require('./getNewsApiArticles')
-const getCurrentsApiArticles = require('./getCurrentsApiArticles')
-const cron = require('node-cron')
+const getNewsApiArticles = require('../helpers/getNewsApiArticles')
+const getCurrentsApiArticles = require('../helpers/getCurrentsApiArticles')
 
 const deleteCollection = async (collectionName) => {
   const collectionRef = db.collection(collectionName)
@@ -17,7 +16,7 @@ const deleteCollection = async (collectionName) => {
   await batch.commit()
 }
 
-const saveArticles = async () => {
+const saveArticles = async (req, res) => {
   try {
     const newsApiCategories = [
       'general',
@@ -91,12 +90,11 @@ const saveArticles = async () => {
     }
 
     console.log('Articles from NewsAPI and CurrentsAPI successfully saved!')
+    res.status(200).json({ message: 'Articles successfully saved!' })
   } catch (error) {
     console.error('Error fetching or saving articles:', error)
+    res.status(500).json({ error: 'Failed to save articles.' })
   }
 }
-
-// set cron job every six hours
-cron.schedule('0 */6 * * *', saveArticles)
 
 module.exports = saveArticles

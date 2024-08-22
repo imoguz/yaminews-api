@@ -19,7 +19,7 @@ app.use(bodyParser.json())
 app.use(require('cors')())
 
 // import Cron job
-require('./src/scheduledTasks/saveArticles')
+app.use('/api/cron', (req, res) => saveArticles(req, res))
 
 // ----- routes -----
 app.use('/yaminews/api/v1', require('./src/routes/index'))
