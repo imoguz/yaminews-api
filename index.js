@@ -18,8 +18,13 @@ app.use(bodyParser.json())
 // ----- cors for all requiest -----
 app.use(require('cors')())
 
+// to test cron job locally
+// const saveNewsApiArticles = require('./api/saveNewsApi')
+// const saveCurrentsApiArticles = require('./api/saveCurrentsApi')
+
 // import Cron job
-app.use('/api/cron', (req, res) => saveArticles(req, res))
+app.use('/api/saveNewsApi', (req, res) => saveNewsApiArticles(req, res))
+app.use('/api/saveCurrents', (req, res) => saveCurrentsApiArticles(req, res))
 
 // ----- routes -----
 app.use('/yaminews/api/v1', require('./src/routes/index'))

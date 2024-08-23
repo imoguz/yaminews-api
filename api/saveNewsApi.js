@@ -2,7 +2,6 @@
 
 const { db } = require('../src/config/firebaseConfig')
 const getNewsApiArticles = require('../src/helpers/getNewsApiArticles')
-const getCurrentsApiArticles = require('../src/helpers/getCurrentsApiArticles')
 
 const deleteCollection = async (collectionName) => {
   const collectionRef = db.collection(collectionName)
@@ -16,7 +15,7 @@ const deleteCollection = async (collectionName) => {
   await batch.commit()
 }
 
-const saveArticles = async (req, res) => {
+const saveNewsApiArticles = async (req, res) => {
   try {
     const newsApiCategories = [
       'general',
@@ -28,20 +27,6 @@ const saveArticles = async (req, res) => {
       'entertainment',
     ]
 
-    const currentApiCategories = [
-      'world',
-      'regional',
-      'lifestyle',
-      'programming',
-      'finance',
-      'academia',
-      'politics',
-      'opinion',
-      'food',
-      'game',
-    ]
-
-    // Save articles from News API
     for (const category of newsApiCategories) {
       // delete old collections
       await deleteCollection(category)
@@ -74,27 +59,11 @@ const saveArticles = async (req, res) => {
       await topHeadlinesBatch.commit()
     }
 
-    // Save articles from Currents API
-    for (const category of currentApiCategories) {
-      // delete old collection
-      await deleteCollection(`currentapi_${category}`)
-
-      const currentsArticles = await getCurrentsApiArticles(category)
-      const currentsBatch = db.batch()
-
-      currentsArticles.forEach((article) => {
-        const docRef = db.collection(`currentapi_${category}`).doc()
-        currentsBatch.set(docRef, article)
-      })
-      await currentsBatch.commit()
-    }
-
-    console.log('Articles from NewsAPI and CurrentsAPI successfully saved!')
+    console.log('Articles from CurrentsAPI successfully saved!')
     res.status(200).json({ message: 'Articles successfully saved!' })
   } catch (error) {
-    console.error('Error fetching or saving articles:', error)
+    console.log(error)
     res.status(500).json({ error: 'Failed to save articles.' })
   }
 }
-
-module.exports = saveArticles
+module.exports = saveNewsApiArticles
