@@ -3,7 +3,6 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-const packagejson = require('./package.json')
 const PORT = 8000
 
 // ------- error handler -------
@@ -33,9 +32,7 @@ app.use('/yaminews/api/v1', require('./src/routes/index'))
 
 // ----- main path -----
 app.all('/', (req, res) => {
-  res.send({
-    message: 'Welcome to ' + packagejson.name,
-  })
+  res.send('Welcome to yaminewsApi')
 })
 
 // ----- Error Handler -----
