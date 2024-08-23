@@ -2,6 +2,6 @@
 
 const router = require('express').Router()
 
-router.use('/newsapi/articles', require('./newsapi.route'))
+router.use('/articles', require('./articles.route'))
 
 module.exports = router
