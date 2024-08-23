@@ -25,7 +25,7 @@ app.use(require('cors')())
 
 // import Cron job
 app.use('/api/saveNewsApi', (req, res) => saveNewsApiArticles(req, res))
-app.use('/api/saveCurrents', (req, res) => saveCurrentsApiArticles(req, res))
+app.use('/api/saveCurrentsApi', (req, res) => saveCurrentsApiArticles(req, res))
 
 // ----- routes -----
 app.use('/yaminews/api/v1', require('./src/routes/index'))
