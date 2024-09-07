@@ -1,5 +1,21 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/index.js"
+    },
+    {
+      "src": "/yaminews/api/v1/(.*)",
+      "dest": "/index.js"
+    }
+  ],
   "crons": [
     {
       "path": "/api/saveNewsApi",
