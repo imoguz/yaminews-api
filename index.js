@@ -24,6 +24,8 @@ app.use(require('cors')())
 // require('./api/saveWeatherApi')()
 
 // import Cron job
+const saveNewsApiArticles = require('./api/saveNewsApi')
+const saveCurrentsApiArticles = require('./api/saveCurrentsApi')
 app.use('/api/saveNewsApi', (req, res) => saveNewsApiArticles(req, res))
 app.use('/api/saveCurrentsApi', (req, res) => saveCurrentsApiArticles(req, res))
 
