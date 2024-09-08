@@ -1,6 +1,6 @@
 'use strict'
 
-const { db } = require('../src/config/firebaseConfig')
+const { db } = require('../config/firebaseConfig')
 
 const deleteCollection = async (collectionName) => {
   const collectionRef = db.collection(collectionName)

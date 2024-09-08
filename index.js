@@ -18,10 +18,9 @@ app.use(bodyParser.json())
 app.use(require('cors')())
 
 // to test cron job locally
-// delete all collections
 // require('./src/helpers/deleteCollections')()
-// const saveNewsApiArticles = require('./api/saveNewsApi')
-// const saveCurrentsApiArticles = require('./api/saveCurrentsApi')
+// require('./api/saveNewsApi')()
+// require('./api/saveCurrentsApi')()
 // require('./api/saveWeatherApi')()
 
 // import Cron job

@@ -15,7 +15,7 @@ const deleteCollection = async (collectionName) => {
   await batch.commit()
 }
 
-const saveCurrentsApiArticles = async (req, res) => {
+const saveCurrentsApiArticles = async () => {
   try {
     const currentApiCategories = [
       'world',
@@ -31,23 +31,26 @@ const saveCurrentsApiArticles = async (req, res) => {
     ]
 
     for (const category of currentApiCategories) {
-      // delete old collection
-      await deleteCollection(`currentapi_${category}`)
-
       const currentsArticles = await getCurrentsApiArticles(category)
-      const currentsBatch = db.batch()
 
-      currentsArticles.forEach((article) => {
-        const docRef = db.collection(`currentapi_${category}`).doc()
-        currentsBatch.set(docRef, article)
-      })
-      await currentsBatch.commit()
+      if (currentsArticles && currentsArticles.length > 0) {
+        await deleteCollection(`currentapi_${category}`)
+
+        const currentsBatch = db.batch()
+        currentsArticles.forEach((article) => {
+          const docRef = db.collection(`currentapi_${category}`).doc()
+          currentsBatch.set(docRef, article)
+        })
+        await currentsBatch.commit()
+        console.log(`Articles for category "${category}" successfully saved!`)
+      } else {
+        console.log(`No articles found for category "${category}". Skipping...`)
+      }
     }
-    console.log('Articles from NewsAPI successfully saved!')
-    res.status(200).json({ message: 'Articles successfully saved!' })
+
+    console.log('Articles from CurrentsAPI successfully saved!')
   } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: 'Failed to save articles.' })
+    console.log('Error saving articles:', error)
   }
 }
 
