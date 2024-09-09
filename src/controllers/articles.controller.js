@@ -11,12 +11,27 @@ module.exports = {
         return res.status(404).send('No articles found')
       }
 
-      const data = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }))
+      const data = snapshot.docs.map((doc) => {
+        const docData = doc.data()
 
-      return res.status(200).send(data)
+        if (!docData.image) docData.image = docData.urlToImage || ''
+        if (!docData.publishedAt)
+          docData.publishedAt = docData.published || null
+
+        return {
+          id: doc.id,
+          ...docData,
+        }
+      })
+
+      const sortedData = data.sort((a, b) => {
+        return (
+          new Date(b.publishedAt || 0).getTime() -
+          new Date(a.publishedAt || 0).getTime()
+        )
+      })
+
+      return res.status(200).send(sortedData)
     } catch (err) {
       return res.status(500).send('Internal server error.')
     }
@@ -32,9 +47,14 @@ module.exports = {
         return res.status(404).send('Article not found')
       }
 
+      const docData = doc.data()
+
+      if (!docData.image) docData.image = docData.urlToImage || ''
+      if (!docData.publishedAt) docData.publishedAt = docData.published || null
+
       const data = {
         id: doc.id,
-        data: doc.data(),
+        ...docData,
       }
 
       return res.status(200).send(data)
