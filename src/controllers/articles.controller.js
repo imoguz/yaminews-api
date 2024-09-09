@@ -11,22 +11,24 @@ module.exports = {
         return res.status(404).send('No articles found')
       }
 
-      const data = snapshot.docs.map((doc) => {
-        const docData = doc.data()
+      const data = snapshot.docs
+        .map((doc) => {
+          const docData = doc.data()
 
-        if (!docData.image || docData.image === 'None') {
-          docData.image = docData.urlToImage || ''
-        }
+          if (!docData.image || docData.image === 'None') {
+            docData.image = docData.urlToImage || ''
+          }
 
-        if (!docData.publishedAt) {
-          docData.publishedAt = docData.published || null
-        }
+          if (!docData.publishedAt) {
+            docData.publishedAt = docData.published || null
+          }
 
-        return {
-          id: doc.id,
-          ...docData,
-        }
-      })
+          return {
+            id: doc.id,
+            ...docData,
+          }
+        })
+        .filter((article) => article.title !== '[Removed]')
 
       const sortedData = data.sort((a, b) => {
         return (
