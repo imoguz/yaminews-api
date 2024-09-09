@@ -14,9 +14,13 @@ module.exports = {
       const data = snapshot.docs.map((doc) => {
         const docData = doc.data()
 
-        if (!docData.image) docData.image = docData.urlToImage || ''
-        if (!docData.publishedAt)
+        if (!docData.image || docData.image === 'None') {
+          docData.image = docData.urlToImage || ''
+        }
+
+        if (!docData.publishedAt) {
           docData.publishedAt = docData.published || null
+        }
 
         return {
           id: doc.id,
@@ -49,7 +53,8 @@ module.exports = {
 
       const docData = doc.data()
 
-      if (!docData.image) docData.image = docData.urlToImage || ''
+      if (!docData.image || docData.image === 'None')
+        docData.image = docData.urlToImage || ''
       if (!docData.publishedAt) docData.publishedAt = docData.published || null
 
       const data = {
