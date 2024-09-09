@@ -8,13 +8,8 @@ module.exports = async (category) => {
     }
 
     const data = await response.json()
-    const articles = data.news
-      ?.filter((article) => article?.image !== 'None')
-      .sort((a, b) => {
-        return new Date(b.published).getTime() - new Date(a.published).getTime()
-      })
 
-    return articles
+    return data.news
   } catch (error) {
     throw new Error(error.message)
   }

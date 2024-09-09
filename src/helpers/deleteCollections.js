@@ -16,7 +16,7 @@ const deleteCollection = async (collectionName) => {
 
 module.exports = async () => {
   try {
-    const currentApiCategories = [
+    const newsCategories = [
       'world',
       'regional',
       'lifestyle',
@@ -27,13 +27,6 @@ module.exports = async () => {
       'opinion',
       'food',
       'game',
-    ]
-
-    for (const category of currentApiCategories) {
-      // delete currentsApi collection
-      await deleteCollection(`currentapi_${category}`)
-    }
-    const newsApiCategories = [
       'general',
       'sports',
       'health',
@@ -41,17 +34,20 @@ module.exports = async () => {
       'business',
       'technology',
       'entertainment',
+      'general_th',
+      'sports_th',
+      'health_th',
+      'science_th',
+      'business_th',
+      'technology_th',
+      'entertainment_th',
     ]
 
-    for (const category of newsApiCategories) {
-      // delete newsApi collections
+    for (const category of newsCategories) {
       await deleteCollection(category)
-      await deleteCollection(`${category}_TH`)
     }
 
-    console.log(
-      'NewsAPI and CurrentsApi article collections successfully deleted.'
-    )
+    console.log('All news collections are successfully deleted.')
   } catch (error) {
     console.log(error)
   }

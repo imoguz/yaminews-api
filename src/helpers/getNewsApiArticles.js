@@ -8,15 +8,8 @@ module.exports = async (category, query) => {
     }
 
     const data = await response.json()
-    const articles = data.articles
-      ?.filter((article) => article.title !== '[Removed]')
-      .sort((a, b) => {
-        return (
-          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-        )
-      })
 
-    return articles
+    return data.articles
   } catch (error) {
     throw new Error(error.message)
   }

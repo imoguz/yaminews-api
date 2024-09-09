@@ -38,36 +38,36 @@ const saveNewsApiArticles = async () => {
         // delete old collection
         await deleteCollection(category)
 
-        // Save new everything article
+        // Save current articles
         const everythingBatch = db.batch()
         everythingArticles.forEach((article) => {
           const docRef = db.collection(category).doc()
           everythingBatch.set(docRef, article)
         })
         await everythingBatch.commit()
-        console.log(`"${category}" articles (everything) saved.`)
+        console.log(`articles from ${category} category have been saved.`)
       } else {
-        console.log(`No "everything" articles found for "${category}".`)
+        console.log(`No articles found for ${category} category.`)
       }
 
-      // Get top-headlines article
+      // Get top-headlines articles
       const topHeadlinesArticles = await getNewsApiArticles(
         'top-headlines',
         category
       )
 
       if (topHeadlinesArticles && topHeadlinesArticles.length > 0) {
-        // delete old collections
-        await deleteCollection(`${category}_TH`)
+        // delete old collection
+        await deleteCollection(`${category}_th`)
 
-        // Save new top-headlines article
+        // Save current articles
         const topHeadlinesBatch = db.batch()
         topHeadlinesArticles.forEach((article) => {
-          const docRef = db.collection(`${category}_TH`).doc()
+          const docRef = db.collection(`${category}_th`).doc()
           topHeadlinesBatch.set(docRef, article)
         })
         await topHeadlinesBatch.commit()
-        console.log(`"${category}" articles (top-headlines) saved.`)
+        console.log(`articles from ${category}_th category have been saved.`)
       } else {
         console.log(`No "top-headlines" articles found for "${category}".`)
       }

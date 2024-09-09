@@ -31,20 +31,23 @@ const saveCurrentsApiArticles = async () => {
     ]
 
     for (const category of currentApiCategories) {
+      // Get articles
       const currentsArticles = await getCurrentsApiArticles(category)
 
       if (currentsArticles && currentsArticles.length > 0) {
-        await deleteCollection(`currentapi_${category}`)
+        // delete old collection
+        await deleteCollection(category)
 
+        // Save current article
         const currentsBatch = db.batch()
         currentsArticles.forEach((article) => {
-          const docRef = db.collection(`currentapi_${category}`).doc()
+          const docRef = db.collection(category).doc()
           currentsBatch.set(docRef, article)
         })
         await currentsBatch.commit()
-        console.log(`Articles for category "${category}" successfully saved!`)
+        console.log(`articles from ${category} category have been saved.`)
       } else {
-        console.log(`No articles found for category "${category}". Skipping...`)
+        console.log(`No articles found for ${category} category.`)
       }
     }
 
