@@ -15,5 +15,15 @@
       "src": "/yaminews/api/v1/(.*)",
       "dest": "/index.js"
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/saveNewsApi",
+      "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/saveCurrentsApi",
+      "schedule": "0 0 * * *"
+    }
   ]
 }
